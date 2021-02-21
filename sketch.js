@@ -9,8 +9,9 @@ x = Math.floor(Math.random() * 200) + 1;
 y = Math.floor(Math.random() * 200) + 1;
 
 entitys = {
-  groups: 1,
-  enemies: []
+  groups: 2,
+  enemies: [],
+  protect: []
 };
 
 function add(who) {
@@ -27,8 +28,23 @@ function add(who) {
       cc: 0,
       color: "#FF0000"
     });
+  } else if (who === "protect") {
+    x = 250; //Math.floor(Math.random() * 200) + 1;
+    y = 440; //Math.floor(Math.random() * 200) + 1;
+    entitys.protect.push({
+      x: x,
+      y: y,
+      sx: x,
+      sy: y,
+      sta: 1,
+      c: 0,
+      cc: 0,
+      color: "#3EFF03"
+    });
   }
 }
+
+add("protect");
 
 for (var i = 0; i < 9; i++) {
   add("enemies");
@@ -55,14 +71,120 @@ function sqraure() {
   line(mouseX + 20, mouseY + 10, windowWidth, mouseY + 10);
 }
 
+drawOn = {
+  enemies: () => {
+    for (var i = 0; i < entitys.enemies.length; i++) {
+      fill(entitys.enemies[i].color);
+      noStroke();
+      rect(entitys.enemies[i].x, entitys.enemies[i].y, 20, 20);
+    }
+  },
+  protect: () => {
+    for (var i = 0; i < entitys.protect.length; i++) {
+      if (entitys.protect[i].sta === 1) {
+        fill(entitys.protect[i].color);
+        noStroke();
+        rect(entitys.protect[i].x, entitys.protect[i].y, 20, 20);
+      } else if (entitys.protect[i].sta === 2) {
+      }
+    }
+  },
+  all: () => {}
+};
+
+UpdateOn = {
+  enemies: () => {
+    for (i = 0; i < entitys.enemies.length; i++) {
+      if (entitys.enemies[i].sta !== 0 && entitys.enemies[i].sta !== 2) {
+        if (entitys.enemies[i].x === windowHeight - 1) {
+          entitys.enemies[i].x = entitys.enemies[i].sx;
+          entitys.enemies[i].y = entitys.enemies[i].sy;
+        } else {
+          var tx = 0; //entitys.enemies[i].x + 1;
+          var ty = 0;
+
+          for (ii = 0; ii < entitys.protect.length; ii++) {
+            if (
+              entitys.enemies[i].x === entitys.protect[ii].x &&
+              entitys.enemies[i].y === entitys.protect[ii].y
+            ) {
+              entitys.protect[ii].sta = 2;
+            }
+            //tests = ii;
+            //entitys.enemies[i].y + 1;
+
+            var dx = 0;
+            var dy = 0;
+            if (entitys.protect[ii].sta === 1) {
+              var px = entitys.protect[ii].x;
+              var py = entitys.protect[ii].y;
+              var ex = entitys.enemies[i].x;
+              var ey = entitys.enemies[i].y;
+
+              var crdx = px - ex;
+              var crdy = py - ey;
+
+              var cdx = Math.abs(crdx);
+              var cdy = Math.abs(crdy);
+
+              //tests = ey;
+              //tests = tests + ", " + py;
+              if (cdx > tx) {
+                tx = px;
+              }
+              if (cdy > ty) {
+                ty = py;
+              }
+            }
+          }
+
+          //tests = tests + ", " + tx;
+
+          if (tx === entitys.enemies[i].x) {
+            entitys.enemies[i].x = entitys.enemies[i].x + 0;
+          } else if (tx > entitys.enemies[i].x) {
+            entitys.enemies[i].x = entitys.enemies[i].x + 1;
+          } else if (tx < entitys.enemies[i].x) {
+            entitys.enemies[i].x = entitys.enemies[i].x - 1;
+          }
+
+          if (ty === entitys.enemies[i].y) {
+            entitys.enemies[i].y = entitys.enemies[i].y + 0;
+          } else if (ty > entitys.enemies[i].y) {
+            entitys.enemies[i].y = entitys.enemies[i].y + 1;
+          } else if (ty < entitys.enemies[i].y) {
+            entitys.enemies[i].y = entitys.enemies[i].y - 1;
+          }
+        }
+      } else if (entitys.enemies[i].sta === 2) {
+        entitys.enemies[i].c = entitys.enemies[i].c + 1;
+        if (entitys.enemies[i].c === 10) {
+          entitys.enemies[i].cc = entitys.enemies[i].cc + 1;
+          entitys.enemies[i].c = 0;
+          if (entitys.enemies[i].color === "#FFFFFF") {
+            entitys.enemies[i].color = "#000000";
+          } else {
+            entitys.enemies[i].color = "#FFFFFF";
+          }
+        }
+        if (entitys.enemies[i].cc === 4) {
+          entitys.enemies[i].sta = 0;
+        }
+      }
+    }
+  },
+  protect: () => {},
+  all: () => {}
+};
+
+drawOn.all();
+
 function draw() {
   background(0);
   // Put drawings here
-  for (var i = 0; i < entitys.enemies.length; i++) {
-    fill(entitys.enemies[i].color);
-    noStroke();
-    rect(entitys.enemies[i].x, entitys.enemies[i].y, 20, 20);
-  }
+  drawOn.enemies();
+  drawOn.protect();
+
   sqraure();
 
   //stroke(54, 204, 37);
@@ -70,31 +192,7 @@ function draw() {
   //line(x, y, x + 5, y);
   //stroke(126);
   //stroke(255);
-  for (i = 0; i < entitys.enemies.length; i++) {
-    if (entitys.enemies[i].sta !== 0 && entitys.enemies[i].sta !== 2) {
-      if (entitys.enemies[i].x === windowHeight - 1) {
-        entitys.enemies[i].x = entitys.enemies[i].sx;
-        entitys.enemies[i].y = entitys.enemies[i].sy;
-      } else {
-        entitys.enemies[i].x = entitys.enemies[i].x + 1;
-        entitys.enemies[i].y = entitys.enemies[i].y + 1;
-      }
-    } else if (entitys.enemies[i].sta === 2) {
-      entitys.enemies[i].c = entitys.enemies[i].c + 1;
-      if (entitys.enemies[i].c === 10) {
-        entitys.enemies[i].cc = entitys.enemies[i].cc + 1;
-        entitys.enemies[i].c = 0;
-        if (entitys.enemies[i].color === "#FFFFFF") {
-          entitys.enemies[i].color = "#000000";
-        } else {
-          entitys.enemies[i].color = "#FFFFFF";
-        }
-      }
-      if (entitys.enemies[i].cc === 4) {
-        entitys.enemies[i].sta = 0;
-      }
-    }
-  }
+  UpdateOn.enemies();
 
   fill(255);
   textStyle(BOLD);
@@ -109,7 +207,7 @@ function draw() {
 }
 
 function mousePressed() {
-  texts = "press";
+  //tests = "press";
   for (i = 0; i < entitys.enemies.length; i++) {
     if (
       entitys.enemies[i].x < mouseX + 30 &&
