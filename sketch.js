@@ -29,7 +29,9 @@ function add(who, xx = 0, yy = 0) {
       sta: 1,
       c: 0,
       cc: 0,
-      color: "#FF0000"
+      color: "#FF0000",
+      health: 0,
+      timer: 100
     });
   } else if (who === "protect") {
     //x = 250; //Math.floor(Math.random() * 200) + 1;
@@ -46,7 +48,8 @@ function add(who, xx = 0, yy = 0) {
       change: {
         x: Pspeed,
         y: Pspeed
-      }
+      },
+      health: 1
     });
   }
 }
@@ -108,6 +111,12 @@ drawOn = {
         fill(entitys.protect[i].color);
         noStroke();
         rect(entitys.protect[i].x, entitys.protect[i].y, 20, 20);
+
+        stroke(255);
+        strokeWeight(4);
+        fill("#FFFFFF");
+        Hsize = 30 * entitys.protect[i].health;
+        rect(entitys.protect[i].x - 5, entitys.protect[i].y - 6, Hsize, 2);
       } else if (entitys.protect[i].sta === 2) {
       }
     }
@@ -118,6 +127,10 @@ drawOn = {
 UpdateOn = {
   enemies: () => {
     for (i = 0; i < entitys.enemies.length; i++) {
+      if (entitys.enemies[i].timer === 100) {
+      } else {
+        entitys.enemies[i].timer = entitys.enemies[i].timer + 1;
+      }
       if (entitys.enemies[i].sta !== 0 && entitys.enemies[i].sta !== 2) {
         if (entitys.enemies[i].x === windowHeight - 1) {
           entitys.enemies[i].x = entitys.enemies[i].sx;
@@ -133,7 +146,14 @@ UpdateOn = {
               entitys.enemies[i].y < entitys.protect[ii].y + 30 &&
               entitys.enemies[i].y > entitys.protect[ii].y - 10
             ) {
-              entitys.protect[ii].sta = 2;
+              if (entitys.enemies[i].timer === 100) {
+                if (entitys.protect[ii].health < 0) {
+                  entitys.protect[ii].sta = 2;
+                } else {
+                  entitys.protect[ii].health = entitys.protect[ii].health - 0.1;
+                  entitys.enemies[i].timer = 0;
+                }
+              }
             }
 
             //tests = ii;
