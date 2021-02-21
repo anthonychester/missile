@@ -3,6 +3,9 @@
 var x = 0;
 var y = 0;
 
+var Pspeed = 1;
+var Espeed = 1;
+
 var tests = "";
 
 x = Math.floor(Math.random() * 200) + 1;
@@ -41,8 +44,8 @@ function add(who) {
       cc: 0,
       color: "#3EFF03",
       change: {
-        x: 1,
-        y: 1
+        x: Pspeed,
+        y: Pspeed
       }
     });
   }
@@ -162,17 +165,17 @@ UpdateOn = {
           if (tx === entitys.enemies[i].x) {
             entitys.enemies[i].x = entitys.enemies[i].x + 0;
           } else if (tx > entitys.enemies[i].x) {
-            entitys.enemies[i].x = entitys.enemies[i].x + 1;
+            entitys.enemies[i].x = entitys.enemies[i].x + Espeed;
           } else if (tx < entitys.enemies[i].x) {
-            entitys.enemies[i].x = entitys.enemies[i].x - 1;
+            entitys.enemies[i].x = entitys.enemies[i].x - Espeed;
           }
 
           if (ty === entitys.enemies[i].y) {
             entitys.enemies[i].y = entitys.enemies[i].y + 0;
           } else if (ty > entitys.enemies[i].y) {
-            entitys.enemies[i].y = entitys.enemies[i].y + 1;
+            entitys.enemies[i].y = entitys.enemies[i].y + Espeed;
           } else if (ty < entitys.enemies[i].y) {
-            entitys.enemies[i].y = entitys.enemies[i].y - 1;
+            entitys.enemies[i].y = entitys.enemies[i].y - Espeed;
           }
         }
       } else if (entitys.enemies[i].sta === 2) {
@@ -194,10 +197,10 @@ UpdateOn = {
   },
   protect: () => {
     for (i = 0; i < entitys.protect.length; i++) {
-      if (entitys.protect[i].x === 0 || entitys.protect[i].x === windowWidth) {
+      if (entitys.protect[i].x < 0 || entitys.protect[i].x > windowWidth) {
         entitys.protect[i].change.x = -entitys.protect[i].change.x;
       }
-      if (entitys.protect[i].y === 0 || entitys.protect[i].y === windowWidth) {
+      if (entitys.protect[i].y < 0 || entitys.protect[i].y > windowWidth) {
         entitys.protect[i].change.y = -entitys.protect[i].change.y;
       }
       entitys.protect[i].x = entitys.protect[i].x + entitys.protect[i].change.x;
