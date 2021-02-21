@@ -17,7 +17,7 @@ entitys = {
   protect: []
 };
 
-function add(who) {
+function add(who, xx = 0, yy = 0) {
   if (who === "enemies") {
     x = Math.floor(Math.random() * 200) + 1;
     y = Math.floor(Math.random() * 200) + 1;
@@ -32,13 +32,13 @@ function add(who) {
       color: "#FF0000"
     });
   } else if (who === "protect") {
-    x = 250; //Math.floor(Math.random() * 200) + 1;
-    y = 440; //Math.floor(Math.random() * 200) + 1;
+    //x = 250; //Math.floor(Math.random() * 200) + 1;
+    //y = 440; //Math.floor(Math.random() * 200) + 1;
     entitys.protect.push({
-      x: x,
-      y: y,
-      sx: x,
-      sy: y,
+      x: xx,
+      y: yy,
+      sx: xx,
+      sy: yy,
       sta: 1,
       c: 0,
       cc: 0,
@@ -51,7 +51,8 @@ function add(who) {
   }
 }
 
-add("protect");
+add("protect", 250, 440);
+add("protect", 350, 220);
 
 for (var i = 0; i < 9; i++) {
   add("enemies");
@@ -127,11 +128,14 @@ UpdateOn = {
 
           for (ii = 0; ii < entitys.protect.length; ii++) {
             if (
-              entitys.enemies[i].x === entitys.protect[ii].x &&
-              entitys.enemies[i].y === entitys.protect[ii].y
+              entitys.enemies[i].x < entitys.protect[ii].x + 30 &&
+              entitys.enemies[i].x > entitys.protect[ii].x - 10 &&
+              entitys.enemies[i].y < entitys.protect[ii].y + 30 &&
+              entitys.enemies[i].y > entitys.protect[ii].y - 10
             ) {
               entitys.protect[ii].sta = 2;
             }
+
             //tests = ii;
             //entitys.enemies[i].y + 1;
 
