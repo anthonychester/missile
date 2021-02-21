@@ -39,7 +39,11 @@ function add(who) {
       sta: 1,
       c: 0,
       cc: 0,
-      color: "#3EFF03"
+      color: "#3EFF03",
+      change: {
+        x: 1,
+        y: 1
+      }
     });
   }
 }
@@ -74,6 +78,21 @@ function sqraure() {
 drawOn = {
   enemies: () => {
     for (var i = 0; i < entitys.enemies.length; i++) {
+      if (entitys.enemies[i].sta === 1) {
+        if (
+          entitys.enemies[i].x < mouseX + 30 &&
+          entitys.enemies[i].x > mouseX - 10 &&
+          entitys.enemies[i].y < mouseY + 30 &&
+          entitys.enemies[i].y > mouseY - 10
+        ) {
+          entitys.enemies[i].color = "#FFF003";
+        } else {
+          entitys.enemies[i].color = "#FF0000";
+        }
+      }
+    }
+
+    for (i = 0; i < entitys.enemies.length; i++) {
       fill(entitys.enemies[i].color);
       noStroke();
       rect(entitys.enemies[i].x, entitys.enemies[i].y, 20, 20);
@@ -173,7 +192,18 @@ UpdateOn = {
       }
     }
   },
-  protect: () => {},
+  protect: () => {
+    for (i = 0; i < entitys.protect.length; i++) {
+      if (entitys.protect[i].x === 0 || entitys.protect[i].x === windowWidth) {
+        entitys.protect[i].change.x = -entitys.protect[i].change.x;
+      }
+      if (entitys.protect[i].y === 0 || entitys.protect[i].y === windowWidth) {
+        entitys.protect[i].change.y = -entitys.protect[i].change.y;
+      }
+      entitys.protect[i].x = entitys.protect[i].x + entitys.protect[i].change.x;
+      entitys.protect[i].y = entitys.protect[i].y + entitys.protect[i].change.y;
+    }
+  },
   all: () => {}
 };
 
@@ -193,6 +223,7 @@ function draw() {
   //stroke(126);
   //stroke(255);
   UpdateOn.enemies();
+  UpdateOn.protect();
 
   fill(255);
   textStyle(BOLD);
@@ -208,7 +239,7 @@ function draw() {
 
 function mousePressed() {
   //tests = "press";
-  for (i = 0; i < entitys.enemies.length; i++) {
+  for (var i = 0; i < entitys.enemies.length; i++) {
     if (
       entitys.enemies[i].x < mouseX + 30 &&
       entitys.enemies[i].x > mouseX - 10 &&
