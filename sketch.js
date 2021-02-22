@@ -226,10 +226,10 @@ UpdateOn = {
   },
   protect: () => {
     for (i = 0; i < entitys.protect.length; i++) {
-      if (entitys.protect[i].x < 0 || entitys.protect[i].x > windowWidth) {
+      if (entitys.protect[i].x < 0 || entitys.protect[i].x >= windowWidth) {
         entitys.protect[i].change.x = -entitys.protect[i].change.x;
       }
-      if (entitys.protect[i].y < 0 || entitys.protect[i].y > windowWidth) {
+      if (entitys.protect[i].y < 0 || entitys.protect[i].y >= windowWidth) {
         entitys.protect[i].change.y = -entitys.protect[i].change.y;
       }
       entitys.protect[i].x = entitys.protect[i].x + entitys.protect[i].change.x;
