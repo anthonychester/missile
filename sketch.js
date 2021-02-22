@@ -3,6 +3,7 @@
 var x = 0;
 var y = 0;
 
+var score = 0;
 var Pspeed = 1;
 var Espeed = 1;
 
@@ -15,15 +16,16 @@ x = Math.floor(Math.random() * 200) + 1;
 y = Math.floor(Math.random() * 200) + 1;
 
 entitys = {
-  groups: 2,
+  groups: 3,
   enemies: [],
-  protect: []
+  protect: [],
+  goal: []
 };
 
 function add(who, xx = 0, yy = 0) {
   if (who === "enemies") {
     x = Math.floor(Math.random() * 200) + 1;
-    y = Math.floor(Math.random() * 200) + 1;
+    y = Math.floor(Math.random() * 100) + 351;
     entitys.enemies.push({
       x: x,
       y: y,
@@ -54,15 +56,31 @@ function add(who, xx = 0, yy = 0) {
       },
       health: 1
     });
+  } else if (who === "goal") {
+    entitys.goal.push({
+      x: xx,
+      y: yy,
+      sx: xx,
+      sy: yy,
+      sta: 1,
+      c: 0,
+      cc: 0,
+      color: "#FFFFFF"
+    });
   }
 }
-
-add("protect", 250, 440);
-add("protect", 350, 220);
 
 for (var i = 0; i < 9; i++) {
   add("enemies");
 }
+
+for (i = 0; i < 4; i++) {
+  x = Math.floor(Math.random() * 100) + 1;
+  y = Math.floor(Math.random() * 100) + 1;
+  add("protect", x, y);
+}
+
+add("goal", 200, 400);
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -70,8 +88,6 @@ function setup() {
 
   // Put setup code here
 }
-
-function bomb() {}
 
 function sqraure() {
   stroke(54, 204, 37);
@@ -126,6 +142,16 @@ drawOn = {
       }
     }
   },
+  goal: () => {
+    for (var i = 0; i < entitys.goal.length; i++) {
+      if (entitys.goal[i].sta === 1) {
+        fill(entitys.goal[i].color);
+        noStroke();
+        rect(entitys.goal[i].x, entitys.goal[i].y, 20, 20);
+      } else if (entitys.goal[i].sta === 2) {
+      }
+    }
+  },
   all: () => {}
 };
 
@@ -137,7 +163,7 @@ UpdateOn = {
         entitys.enemies[i].timer = entitys.enemies[i].timer + 1;
       }
       if (entitys.enemies[i].sta !== 0 && entitys.enemies[i].sta !== 2) {
-        if (entitys.enemies[i].x === windowHeight - 1) {
+        if (1 === 0) {
           entitys.enemies[i].x = entitys.enemies[i].sx;
           entitys.enemies[i].y = entitys.enemies[i].sy;
         } else {
@@ -146,10 +172,10 @@ UpdateOn = {
 
           for (ii = 0; ii < entitys.protect.length; ii++) {
             if (
-              entitys.enemies[i].x < entitys.protect[ii].x + Sqsize + HSqsize &&
-              entitys.enemies[i].x > entitys.protect[ii].x - HSqsize &&
-              entitys.enemies[i].y < entitys.protect[ii].y + Sqsize + HSqsize &&
-              entitys.enemies[i].y > entitys.protect[ii].y - HSqsize
+              entitys.enemies[i].x < entitys.protect[ii].x + 30 &&
+              entitys.enemies[i].x > entitys.protect[ii].x - 10 &&
+              entitys.enemies[i].y < entitys.protect[ii].y + 30 &&
+              entitys.enemies[i].y > entitys.protect[ii].y - 10
             ) {
               if (entitys.enemies[i].timer === 100) {
                 if (entitys.protect[ii].health < 0) {
@@ -229,26 +255,44 @@ UpdateOn = {
       if (entitys.protect[i].x < 0 || entitys.protect[i].x >= windowWidth) {
         entitys.protect[i].change.x = -entitys.protect[i].change.x;
       }
-      if (entitys.protect[i].y < 0 || entitys.protect[i].y >= windowWidth) {
+      if (entitys.protect[i].y < 0 || entitys.protect[i].y >= windowHeight) {
         entitys.protect[i].change.y = -entitys.protect[i].change.y;
       }
       entitys.protect[i].x = entitys.protect[i].x + entitys.protect[i].change.x;
       entitys.protect[i].y = entitys.protect[i].y + entitys.protect[i].change.y;
     }
   },
+  goal: () => {
+    for (i = 0; i < entitys.goal.length; i++) {
+      //entitys.goal[i].
+      for (ii = 0; ii < entitys.protect.length; ii++) {
+        //entitys.protect[i].
+        if (
+          entitys.goal[i].x < entitys.protect[ii].x + 30 &&
+          entitys.goal[i].x > entitys.protect[ii].x - 10 &&
+          entitys.goal[i].y < entitys.protect[ii].y + 30 &&
+          entitys.goal[i].y > entitys.protect[ii].y - 10
+        ) {
+          score = score + 100;
+          entitys.protect[ii].sta = 3;
+        }
+      }
+    }
+  },
   all: () => {}
 };
-
-drawOn.all();
 
 function draw() {
   background(0);
   // Put drawings here
-  drawOn.enemies();
-  drawOn.protect();
 
   sqraure();
 
+  drawOn.all();
+
+  drawOn.goal();
+  drawOn.enemies();
+  drawOn.protect();
   //stroke(54, 204, 37);
   //strokeWeight(4);
   //line(x, y, x + 5, y);
@@ -256,11 +300,12 @@ function draw() {
   //stroke(255);
   UpdateOn.enemies();
   UpdateOn.protect();
+  UpdateOn.goal();
 
   fill(255);
   textStyle(BOLD);
   textSize(20);
-  text(tests, 60, 250);
+  text(score, 60, 250);
 
   //fill(234, 31, 81);
   //noStroke();
