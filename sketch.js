@@ -6,6 +6,9 @@ var y = 0;
 var Pspeed = 1;
 var Espeed = 1;
 
+var Sqsize = 30;
+var HSqsize = Sqsize / 2;
+
 var tests = "";
 
 x = Math.floor(Math.random() * 200) + 1;
@@ -73,15 +76,15 @@ function bomb() {}
 function sqraure() {
   stroke(54, 204, 37);
   strokeWeight(4);
-  line(mouseX, mouseY, mouseX + 20, mouseY);
-  line(mouseX, mouseY + 20, mouseX + 20, mouseY + 20);
-  line(mouseX, mouseY + 20, mouseX, mouseY);
-  line(mouseX + 20, mouseY + 20, mouseX + 20, mouseY);
+  line(mouseX, mouseY, mouseX + Sqsize, mouseY);
+  line(mouseX, mouseY + Sqsize, mouseX + Sqsize, mouseY + Sqsize);
+  line(mouseX, mouseY + Sqsize, mouseX, mouseY);
+  line(mouseX + Sqsize, mouseY + Sqsize, mouseX + Sqsize, mouseY);
 
-  line(mouseX + 10, mouseY, mouseX + 10, 0);
-  line(mouseX + 10, mouseY + 20, mouseX + 10, windowHeight);
-  line(mouseX, mouseY + 10, 0, mouseY + 10);
-  line(mouseX + 20, mouseY + 10, windowWidth, mouseY + 10);
+  line(mouseX + HSqsize, mouseY, mouseX + HSqsize, 0);
+  line(mouseX + HSqsize, mouseY + Sqsize, mouseX + HSqsize, windowHeight);
+  line(mouseX, mouseY + HSqsize, 0, mouseY + HSqsize);
+  line(mouseX + Sqsize, mouseY + HSqsize, windowWidth, mouseY + HSqsize);
 }
 
 drawOn = {
@@ -89,10 +92,10 @@ drawOn = {
     for (var i = 0; i < entitys.enemies.length; i++) {
       if (entitys.enemies[i].sta === 1) {
         if (
-          entitys.enemies[i].x < mouseX + 30 &&
-          entitys.enemies[i].x > mouseX - 10 &&
-          entitys.enemies[i].y < mouseY + 30 &&
-          entitys.enemies[i].y > mouseY - 10
+          entitys.enemies[i].x < mouseX + Sqsize + HSqsize &&
+          entitys.enemies[i].x > mouseX - HSqsize &&
+          entitys.enemies[i].y < mouseY + Sqsize + HSqsize &&
+          entitys.enemies[i].y > mouseY - HSqsize
         ) {
           entitys.enemies[i].color = "#FFF003";
         } else {
@@ -143,10 +146,10 @@ UpdateOn = {
 
           for (ii = 0; ii < entitys.protect.length; ii++) {
             if (
-              entitys.enemies[i].x < entitys.protect[ii].x + 30 &&
-              entitys.enemies[i].x > entitys.protect[ii].x - 10 &&
-              entitys.enemies[i].y < entitys.protect[ii].y + 30 &&
-              entitys.enemies[i].y > entitys.protect[ii].y - 10
+              entitys.enemies[i].x < entitys.protect[ii].x + Sqsize + HSqsize &&
+              entitys.enemies[i].x > entitys.protect[ii].x - HSqsize &&
+              entitys.enemies[i].y < entitys.protect[ii].y + Sqsize + HSqsize &&
+              entitys.enemies[i].y > entitys.protect[ii].y - HSqsize
             ) {
               if (entitys.enemies[i].timer === 100) {
                 if (entitys.protect[ii].health < 0) {
@@ -270,10 +273,10 @@ function mousePressed() {
   //tests = "press";
   for (var i = 0; i < entitys.enemies.length; i++) {
     if (
-      entitys.enemies[i].x < mouseX + 30 &&
-      entitys.enemies[i].x > mouseX - 10 &&
-      entitys.enemies[i].y < mouseY + 30 &&
-      entitys.enemies[i].y > mouseY - 10
+      entitys.enemies[i].x < mouseX + Sqsize + HSqsize &&
+      entitys.enemies[i].x > mouseX - HSqsize &&
+      entitys.enemies[i].y < mouseY + Sqsize + HSqsize &&
+      entitys.enemies[i].y > mouseY - HSqsize
     ) {
       entitys.enemies[i].sta = 2;
     }
