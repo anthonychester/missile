@@ -68,6 +68,8 @@ function setup() {
   // Put setup code here
 }
 
+function bomb() {}
+
 function sqraure() {
   stroke(54, 204, 37);
   strokeWeight(4);
