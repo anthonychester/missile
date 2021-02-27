@@ -1,1 +1,49 @@
-<mxfile host="app.diagrams.net" modified="2021-02-27T16:45:11.657Z" agent="5.0 (X11; CrOS x86_64 13597.84.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.153 Safari/537.36" version="14.4.3" etag="XXjGb49V2ekXgrxRO39j" type="github"><diagram id="AGhqf59_7zjKtMrzg0lr">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-02-27T17:21:54.088Z" agent="5.0 (X11; CrOS x86_64 13597.84.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.153 Safari/537.36" etag="2CVVwgCXK4kCVBKENBMj" version="14.4.3" type="github">
+  <diagram id="AGhqf59_7zjKtMrzg0lr" name="Page-1">
+    <mxGraphModel dx="802" dy="591" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-1" value="If in contact with tree&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="90" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-2" value="True" style="endArrow=none;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="gY5aFYLa-Jj8FfiEUN7P-3" target="gY5aFYLa-Jj8FfiEUN7P-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="210" as="sourcePoint" />
+            <mxPoint x="440" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-3" value="If E pressed&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-4" value="if tree heath is 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="290" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-5" value="True" style="endArrow=none;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="gY5aFYLa-Jj8FfiEUN7P-4" target="gY5aFYLa-Jj8FfiEUN7P-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="310" as="sourcePoint" />
+            <mxPoint x="440" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-6" value="Dretry tree and add wood to inventory&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-7" value="Tree heath - 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-11" value="False" style="endArrow=none;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="gY5aFYLa-Jj8FfiEUN7P-7" target="gY5aFYLa-Jj8FfiEUN7P-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="310" as="sourcePoint" />
+            <mxPoint x="390" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gY5aFYLa-Jj8FfiEUN7P-14" value="True" style="endArrow=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="gY5aFYLa-Jj8FfiEUN7P-4" target="gY5aFYLa-Jj8FfiEUN7P-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="310" as="sourcePoint" />
+            <mxPoint x="510" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
